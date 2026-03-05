@@ -30,7 +30,6 @@ body{
   overflow-x:hidden;
 }
 .screen{max-width:480px;margin:0 auto;}
-.nav{max-width:480px;left:50%;transform:translateX(-50%);right:auto;}
 
 /* ── AMBIENT BG ── */
 .ambient{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
@@ -99,43 +98,52 @@ body{
 .sec-label{padding:0 20px 10px;font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--muted);}
 
 /* Hoy tasks */
-.task-list{padding:0 16px;display:flex;flex-direction:column;gap:6px;margin-bottom:28px;}
+.task-list{padding:0 16px;display:flex;flex-direction:column;gap:8px;margin-bottom:28px;}
 .task-item{
-  display:flex;align-items:center;gap:14px;
+  display:flex;align-items:center;gap:16px;
   background:var(--s2);border:1px solid var(--border);
-  border-radius:var(--r);padding:14px 16px;
-  cursor:pointer;transition:all 0.15s;user-select:none;
-  -webkit-user-select:none;
+  border-radius:var(--r);padding:18px 18px;
+  cursor:pointer;transition:all 0.2s;user-select:none;
+  -webkit-user-select:none;overflow:hidden;
 }
-.task-item:active{transform:scale(0.98);background:var(--s3);}
-.task-item.done{opacity:0.35;}
-.task-item.done .task-name{text-decoration:line-through;}
+.task-item:active{transform:scale(0.97);background:var(--s3);}
+.task-item.done{
+  animation:slideOut 0.35s ease forwards;
+}
+@keyframes slideOut{
+  0%{opacity:1;transform:translateX(0);max-height:80px;margin-bottom:8px;padding:18px;}
+  60%{opacity:0;transform:translateX(60px);}
+  100%{opacity:0;max-height:0;margin-bottom:0;padding:0;border-width:0;}
+}
 .task-check{
-  width:24px;height:24px;flex-shrink:0;border-radius:8px;
+  width:28px;height:28px;flex-shrink:0;border-radius:10px;
   border:2px solid currentColor;
   display:grid;place-items:center;transition:background 0.15s;
 }
 .task-item.done .task-check{background:currentColor;}
-.task-check svg{display:none;width:12px;height:12px;}
+.task-check svg{display:none;width:14px;height:14px;}
 .task-item.done .task-check svg{display:block;}
 .task-info{flex:1;min-width:0;}
-.task-name{font-size:15px;font-weight:500;line-height:1.3;}
-.task-time{font-size:11px;color:var(--muted2);margin-top:2px;font-weight:400;}
-.task-cat-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;background:currentColor;}
+.task-name{font-size:16px;font-weight:600;line-height:1.3;}
+.task-time{font-size:12px;color:var(--muted2);margin-top:3px;font-weight:400;}
+.task-cat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;background:currentColor;}
 
 /* Hoy habits */
-.habits-today{padding:0 16px;display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:28px;}
+.habits-today{padding:0 16px;display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:28px;}
 .hab-btn{
   background:var(--s2);border:1.5px solid var(--border);border-radius:var(--r);
-  padding:16px 14px;display:flex;align-items:center;gap:12px;
-  cursor:pointer;transition:all 0.18s;user-select:none;-webkit-user-select:none;
+  padding:20px 16px;display:flex;align-items:center;gap:14px;
+  cursor:pointer;transition:all 0.2s;user-select:none;-webkit-user-select:none;
+  overflow:hidden;
 }
-.hab-btn:active{transform:scale(0.97);}
-.hab-btn.done{border-width:2px;}
-.hab-icon{font-size:26px;flex-shrink:0;}
+.hab-btn:active{transform:scale(0.96);}
+.hab-btn.done{
+  animation:slideOut 0.35s ease forwards;
+}
+.hab-icon{font-size:30px;flex-shrink:0;}
 .hab-info{flex:1;min-width:0;}
-.hab-name{font-size:13px;font-weight:600;line-height:1.2;margin-bottom:3px;}
-.hab-status{font-size:10px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;}
+.hab-name{font-size:14px;font-weight:600;line-height:1.2;margin-bottom:4px;}
+.hab-status{font-size:11px;font-weight:700;letter-spacing:0.5px;text-transform:uppercase;}
 
 /* ════════════════════════════════
    SEMANA SCREEN
@@ -248,6 +256,38 @@ body{
 
 /* ── SCROLLBAR ── */
 ::-webkit-scrollbar{width:0;height:0;}
+
+/* ── CELEBRATION ── */
+.celebration{
+  position:fixed;inset:0;z-index:999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:rgba(8,8,8,0.97);
+  opacity:0;pointer-events:none;
+  transition:opacity 0.4s ease;
+  padding:40px 32px;text-align:center;
+}
+.celebration.show{opacity:1;pointer-events:all;}
+.cel-emoji{font-size:72px;margin-bottom:24px;animation:bounce 0.6s ease 0.3s both;}
+@keyframes bounce{0%{transform:scale(0)}60%{transform:scale(1.2)}100%{transform:scale(1)}}
+.cel-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.5rem,12vw,4rem);
+  letter-spacing:2px;line-height:1;margin-bottom:16px;}
+.cel-title span{color:var(--box);}
+.cel-sub{font-size:15px;color:var(--muted2);line-height:1.7;max-width:300px;margin-bottom:36px;}
+.cel-sub strong{color:var(--text);}
+.cel-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;width:100%;margin-bottom:36px;}
+.cel-stat{background:var(--s2);border:1px solid var(--border);border-radius:14px;padding:16px 8px;}
+.cel-stat-num{font-family:'Bebas Neue',sans-serif;font-size:2rem;line-height:1;}
+.cel-stat-lbl{font-size:10px;color:var(--muted2);font-weight:600;letter-spacing:1px;text-transform:uppercase;margin-top:4px;}
+.cel-btn{background:var(--box);color:#fff;border:none;font-family:'Outfit',sans-serif;
+  font-size:15px;font-weight:700;padding:16px 40px;border-radius:40px;cursor:pointer;
+  letter-spacing:0.5px;}
+.cel-confetti{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;}
+.conf-piece{position:absolute;width:8px;height:8px;border-radius:2px;opacity:0;
+  animation:confFall linear forwards;}
+@keyframes confFall{
+  0%{opacity:1;transform:translateY(-20px) rotate(0deg);}
+  100%{opacity:0;transform:translateY(100vh) rotate(720deg);}
+}
 </style>
 </head>
 <body>
@@ -349,6 +389,33 @@ body{
 
 </div>
 
+<!-- ══ CELEBRATION ═══════════════════════════════════ -->
+<div class="celebration" id="celebration">
+  <div class="cel-confetti" id="confetti"></div>
+  <div class="cel-emoji">🏆</div>
+  <div class="cel-title">DÍA <span>COMPLETADO.</span></div>
+  <div class="cel-sub">
+    <strong>Lo hiciste todo.</strong><br>
+    Boxeo a las 5am, gym, clases, cocina, estudio.<br>
+    Eso no lo hace cualquiera.
+  </div>
+  <div class="cel-stats">
+    <div class="cel-stat">
+      <div class="cel-stat-num" id="cel-tasks" style="color:var(--box)">0</div>
+      <div class="cel-stat-lbl">Tareas</div>
+    </div>
+    <div class="cel-stat">
+      <div class="cel-stat-num" id="cel-habits" style="color:var(--gym)">0</div>
+      <div class="cel-stat-lbl">Hábitos</div>
+    </div>
+    <div class="cel-stat">
+      <div class="cel-stat-num" id="cel-streak" style="color:var(--food)">💪</div>
+      <div class="cel-stat-lbl">Racha</div>
+    </div>
+  </div>
+  <button class="cel-btn" onclick="closeCelebration()">¡A descansar!</button>
+</div>
+
 <!-- ══ NAV ═══════════════════════════════════════════ -->
 <nav class="nav">
   <button class="nav-btn active" id="nb-hoy" onclick="goTo('hoy')">
@@ -371,8 +438,10 @@ body{
 <script>
 // ── DATES ─────────────────────────────────────────────────────────
 function getMonday(d){
-  const day=d.getDay(),diff=day===0?-6:1-day,m=new Date(d);
-  m.setDate(d.getDate()+diff);return m;
+  const day=d.getDay(); // 0=Sun
+  const diff=day===0?-6:1-day;
+  const m=new Date(d.getFullYear(),d.getMonth(),d.getDate()+diff);
+  return m;
 }
 const TODAY=new Date();
 const MON=getMonday(TODAY);
@@ -386,9 +455,14 @@ const NOTES=['¡Semana nueva, a romperla!','¡Segundo día, mantén el fuego!',
 
 const DAYS=DAYNAMES.map((n,i)=>{
   const d=new Date(MON);d.setDate(MON.getDate()+i);
-  return{name:n,num:d.getDate(),month:d.getMonth(),full:d};
+  return{name:n,num:d.getDate(),month:d.getMonth(),year:d.getFullYear(),full:d};
 });
-const TI=DAYS.findIndex(d=>d.full.toDateString()===TODAY.toDateString());
+// Compare by local year/month/day to avoid timezone issues
+const TI=DAYS.findIndex(d=>
+  d.year===TODAY.getFullYear()&&
+  d.month===TODAY.getMonth()&&
+  d.num===TODAY.getDate()
+);
 
 // Week range label
 const we=DAYS[6];
@@ -486,6 +560,73 @@ function goTo(sc){
   if(sc==='resumen') buildResumen();
 }
 
+// ── HELPERS ───────────────────────────────────────────────────────
+function updateHoyCounters(){
+  if(TI<0)return;
+  const di=TI,tasks=SCH[di];
+  const done=tasks.filter((_,ti)=>TS[K(di,ti)]).length;
+  const pct=tasks.length?Math.round((done/tasks.length)*100):0;
+  const circ=2*Math.PI*33;
+  document.getElementById('ring-fill').style.strokeDashoffset=circ-(circ*pct/100);
+  document.getElementById('ring-pct').textContent=pct+'%';
+  document.getElementById('strip-count').textContent=`${done}/${tasks.length}`;
+  document.getElementById('strip-fill').style.width=pct+'%';
+  // trigger celebration when all tasks done
+  if(done>0 && done===tasks.length) setTimeout(showCelebration, 400);
+}
+
+function showCelebration(){
+  const di=TI,tasks=SCH[di];
+  const tasksDone=tasks.filter((_,ti)=>TS[K(di,ti)]).length;
+  const habitsDone=HABITS.filter((h,hi)=>h.days.includes(di)&&HS[K(hi,di)]).length;
+  document.getElementById('cel-tasks').textContent=tasksDone;
+  document.getElementById('cel-habits').textContent=habitsDone;
+  document.getElementById('celebration').classList.add('show');
+  spawnConfetti();
+}
+
+function closeCelebration(){
+  document.getElementById('celebration').classList.remove('show');
+}
+
+function spawnConfetti(){
+  const colors=['#ff3d00','#00e5ff','#ffd600','#4ade80','#a78bfa','#f472b6','#fff'];
+  const container=document.getElementById('confetti');
+  container.innerHTML='';
+  for(let i=0;i<60;i++){
+    const p=document.createElement('div');
+    p.className='conf-piece';
+    p.style.cssText=`
+      left:${Math.random()*100}%;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;
+      border-radius:${Math.random()>0.5?'50%':'2px'};
+      animation-duration:${1.5+Math.random()*2}s;
+      animation-delay:${Math.random()*0.5}s;
+    `;
+    container.appendChild(p);
+  }
+}
+
+function refreshHabitsToday(){
+  // Only sync habit buttons that were auto-triggered by a task — update in place
+  if(TI<0)return;
+  const di=TI;
+  const hl=document.getElementById('hoy-habits');
+  if(!hl)return;
+  hl.querySelectorAll('.hab-btn').forEach(btn=>{
+    const hi=+btn.dataset.hi;
+    const on=HS[K(hi,di)]||false;
+    const h=HABITS[hi];
+    btn.style.borderColor=on?h.color:'';
+    btn.style.background=on?`${h.color}15`:'';
+    const nm=btn.querySelector('.hab-name');
+    const st=btn.querySelector('.hab-status');
+    if(nm)nm.style.color=on?h.color:'';
+    if(st){st.style.color=on?h.color:'var(--muted)';st.textContent=on?'✓ Listo':'Pendiente';}
+  });
+}
+
 // ── HOY ───────────────────────────────────────────────────────────
 function buildHoy(){
   if(TI<0){
@@ -529,7 +670,19 @@ function buildHoy(){
       <div class="task-cat-dot ${item.c}"></div>`;
     el.addEventListener('click',()=>{
       const v=!TS[K(di,ti)];TS[K(di,ti)]=v;
-      sync(di,ti,v);save();buildHoy();buildWeekPills();buildResumen();
+      sync(di,ti,v);save();
+      if(v){
+        el.classList.add('done');
+        setTimeout(()=>{
+          el.remove();
+          updateHoyCounters();
+          buildWeekPills();
+          refreshHabitsToday();
+        },360);
+      } else {
+        el.classList.remove('done');
+        updateHoyCounters();
+      }
     });
     tl.appendChild(el);
   });
@@ -542,7 +695,7 @@ function buildHoy(){
     const on=HS[K(hi,di)]||false;
     const btn=document.createElement('div');
     btn.className=`hab-btn ${on?'done':''}`;
-    btn.style.borderColor=on?h.color:'';
+    btn.dataset.hi=hi;
     btn.style.background=on?`${h.color}15`:'';
     btn.innerHTML=`
       <div class="hab-icon">${h.icon}</div>
@@ -551,7 +704,14 @@ function buildHoy(){
         <div class="hab-status" style="color:${on?h.color:'var(--muted)'}">${on?'✓ Listo':'Pendiente'}</div>
       </div>`;
     btn.addEventListener('click',()=>{
-      HS[K(hi,di)]=!HS[K(hi,di)];save();buildHoy();buildResumen();
+      const newVal=!HS[K(hi,di)];
+      HS[K(hi,di)]=newVal;save();
+      // update in place — no disappear, no rebuild
+      btn.style.borderColor=newVal?h.color:'';
+      btn.style.background=newVal?`${h.color}15`:'';
+      btn.querySelector('.hab-name').style.color=newVal?h.color:'';
+      btn.querySelector('.hab-status').style.color=newVal?h.color:'var(--muted)';
+      btn.querySelector('.hab-status').textContent=newVal?'✓ Listo':'Pendiente';
     });
     hl.appendChild(btn);
   });
